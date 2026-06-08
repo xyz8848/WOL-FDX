@@ -1,8 +1,11 @@
 package de.florianisme.wakeonlan.ui;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,7 +26,9 @@ import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityMainBinding;
 import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
 import de.florianisme.wakeonlan.shortcuts.DynamicShortcutManager;
+import de.florianisme.wakeonlan.wear.GooglePlayServicesHelper;
 import de.florianisme.wakeonlan.wear.WearClient;
+import de.florianisme.wakeonlan.wear.WearDeviceClickedService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,13 +69,35 @@ public class MainActivity extends AppCompatActivity {
         });
 
         versionView.setText(getString(R.string.drawer_menu_header_version, BuildConfig.VERSION_NAME));
+
+        // Show wear warning if Google Play Services is unavailable
+        if (!GooglePlayServicesHelper.isGooglePlayServicesAvailable(this)) {
+            TextView wearInfoView = headerView.findViewById(R.id.navigation_header_wear_info);
+            wearInfoView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initializeWearClient() {
+        if (!GooglePlayServicesHelper.isGooglePlayServicesAvailable(this)) {
+            return;
+        }
+        enableWearService();
         wearClient = new WearClient(this);
         DeviceRepository.getInstance(this)
                 .getAllAsObservable()
                 .observe(this, devices -> wearClient.onDeviceListUpdated(devices));
+    }
+
+    private void enableWearService() {
+        try {
+            PackageManager pm = getPackageManager();
+            ComponentName component = new ComponentName(this, WearDeviceClickedService.class);
+            pm.setComponentEnabledSetting(component,
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP);
+        } catch (Exception e) {
+            Log.w("MainActivity", "Failed to enable Wear service", e);
+        }
     }
 
     private void initializeNavController() {

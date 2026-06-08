@@ -128,4 +128,7 @@
     <string name="execution_error_command_not_found">Command not found</string>
     <string name="execution_error_command_not_executable">Command not executable</string>
     <string name="execution_error_unknown">Unknown</string>
+
+    <!-- Wear OS -->
+    <string name="wear_gms_unavailable">Wear OS companion features require Google Play Services, which is not available on this device.</string>
 </resources>

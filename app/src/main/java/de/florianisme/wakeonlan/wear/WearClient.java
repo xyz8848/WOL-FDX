@@ -19,19 +19,38 @@ import de.florianisme.wakeonlan.persistence.models.Device;
 
 public class WearClient {
 
+    private static final String TAG = "WearClient";
     private static final String DEVICE_LIST_PATH = "/device_list";
-    private final DataClient dataClient;
+    private DataClient dataClient;
+    private boolean isAvailable = false;
 
     public WearClient(Context context) {
-        dataClient = Wearable.getDataClient(context);
+        if (GooglePlayServicesHelper.isGooglePlayServicesAvailable(context)) {
+            try {
+                dataClient = Wearable.getDataClient(context);
+                isAvailable = true;
+            } catch (Exception e) {
+                Log.w(TAG, "Failed to initialize Wear DataClient", e);
+            }
+        } else {
+            Log.w(TAG, "Google Play Services not available, Wear features disabled");
+        }
     }
 
     public void onDeviceListUpdated(List<Device> deviceList) {
+        if (!isAvailable) {
+            return;
+        }
+
         PutDataMapRequest putDataMapRequest = PutDataMapRequest.create(DEVICE_LIST_PATH);
         putDataMapRequest.getDataMap().putByteArray("devices", buildDevicesListByteArray(deviceList));
         PutDataRequest putDataReq = putDataMapRequest.asPutDataRequest();
 
-        dataClient.putDataItem(putDataReq);
+        try {
+            dataClient.putDataItem(putDataReq);
+        } catch (Exception e) {
+            Log.w(TAG, "Failed to sync device list to Wear", e);
+        }
     }
 
     private byte[] buildDevicesListByteArray(List<Device> devices) {

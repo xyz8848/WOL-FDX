@@ -4,6 +4,13 @@
 -dontwarn org.slf4j.**
 -dontwarn sun.security.x509.**
 
+# Keep Wear package classes (compileOnly dependencies may cause R8 to strip usage)
+-keep class de.florianisme.wakeonlan.wear.** { *; }
+
+# Keep Google Play Services classes referenced via compileOnly
+-dontwarn com.google.android.gms.wearable.**
+-dontwarn com.google.android.gms.common.**
+
 -keep class de.florianisme.wakeonlan.models.DeviceDto { *; }
 
 -keep class org.bouncycastle.jcajce.provider.** { *; }
