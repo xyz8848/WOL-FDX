@@ -68,19 +68,6 @@
             </intent-filter>
         </service>
         <service
-            android:name=".wear.WearDeviceClickedService"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
-                <data
-                    android:scheme="wear"
-                    android:host="*"
-                    android:pathPrefix="/device_clicked" />
-            </intent-filter>
-        </service>
-
-        <service
             android:name=".quickaccess.QuickAccessProviderService"
             android:label="@string/app_name"
             android:exported="true"
@@ -90,9 +77,6 @@
             </intent-filter>
         </service>
 
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

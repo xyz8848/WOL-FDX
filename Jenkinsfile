@@ -16,8 +16,7 @@ pipeline {
             steps {
                 archiveArtifacts artifacts: 'app/build/outputs/bundle/release/app-release.aab', followSymlinks: false, onlyIfSuccessful: true
                 archiveArtifacts artifacts: 'app/build/outputs/apk/release/app-release.apk', followSymlinks: false, onlyIfSuccessful: true
-                archiveArtifacts artifacts: 'wear/build/outputs/bundle/release/wear-release.aab', followSymlinks: false, onlyIfSuccessful: true
-                archiveArtifacts artifacts: 'wear/build/outputs/apk/release/wear-release.apk', followSymlinks: false, onlyIfSuccessful: true
+
             }
         }
 	    stage('Publish to Play Store') {
@@ -26,16 +25,13 @@ pipeline {
                     if (env.BRANCH_NAME == 'master') {
                         echo 'Publishing Bundle to Beta channel (Not allowed to fail)'
                         androidApkUpload filesPattern: 'app/build/outputs/bundle/release/app-release.aab', googleCredentialsId: 'Florianisme', rolloutPercentage: '20', trackName: 'beta'
-                        androidApkUpload filesPattern: 'wear/build/outputs/bundle/release/wear-release.aab', googleCredentialsId: 'Florianisme', rolloutPercentage: '20', trackName: 'wear:beta'
                     } else if (env.BRANCH_NAME == 'release') {
                         echo 'Publishing Bundle to Internal channel (Not allowed to fail)'
                         androidApkUpload filesPattern: 'app/build/outputs/bundle/release/app-release.aab', googleCredentialsId: 'Florianisme', rolloutPercentage: '100', trackName: 'internal'
-                        androidApkUpload filesPattern: 'wear/build/outputs/bundle/release/wear-release.aab', googleCredentialsId: 'Florianisme', rolloutPercentage: '100', trackName: 'wear:internal'
                     } else if (env.BRANCH_NAME == 'develop' || env.BRANCH_NAME.contains('feature')) {
                         echo 'Publishing Bundle to Internal channel (Allowed to fail)'
                         try {
                             androidApkUpload filesPattern: 'app/build/outputs/bundle/release/app-release.aab', googleCredentialsId: 'Florianisme', rolloutPercentage: '100', trackName: 'internal'
-                            androidApkUpload filesPattern: 'wear/build/outputs/bundle/release/wear-release.aab', googleCredentialsId: 'Florianisme', rolloutPercentage: '100', trackName: 'wear:internal'
                         } catch(error) {
                             currentBuild.result = 'SUCCESS'
                         }

@@ -23,14 +23,11 @@ import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityMainBinding;
 import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
 import de.florianisme.wakeonlan.shortcuts.DynamicShortcutManager;
-import de.florianisme.wakeonlan.wear.WearClient;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
-
-    private WearClient wearClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
 
         initializeNavController();
-        initializeWearClient();
         initializeShortcuts();
     }
 
@@ -64,13 +60,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         versionView.setText(getString(R.string.drawer_menu_header_version, BuildConfig.VERSION_NAME));
-    }
-
-    private void initializeWearClient() {
-        wearClient = new WearClient(this);
-        DeviceRepository.getInstance(this)
-                .getAllAsObservable()
-                .observe(this, devices -> wearClient.onDeviceListUpdated(devices));
     }
 
     private void initializeNavController() {
