@@ -28,7 +28,6 @@ import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
 import de.florianisme.wakeonlan.shortcuts.DynamicShortcutManager;
 import de.florianisme.wakeonlan.wear.GooglePlayServicesHelper;
 import de.florianisme.wakeonlan.wear.WearClient;
-import de.florianisme.wakeonlan.wear.WearDeviceClickedService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -81,22 +80,27 @@ public class MainActivity extends AppCompatActivity {
         if (!GooglePlayServicesHelper.isGooglePlayServicesAvailable(this)) {
             return;
         }
-        enableWearService();
-        wearClient = new WearClient(this);
-        DeviceRepository.getInstance(this)
-                .getAllAsObservable()
-                .observe(this, devices -> wearClient.onDeviceListUpdated(devices));
+        try {
+            enableWearService();
+            wearClient = new WearClient(this);
+            DeviceRepository.getInstance(this)
+                    .getAllAsObservable()
+                    .observe(this, devices -> wearClient.onDeviceListUpdated(devices));
+        } catch (Throwable t) {
+            Log.w("MainActivity", "Failed to initialize Wear client", t);
+        }
     }
 
     private void enableWearService() {
         try {
             PackageManager pm = getPackageManager();
-            ComponentName component = new ComponentName(this, WearDeviceClickedService.class);
+            ComponentName component = new ComponentName(this,
+                    "de.florianisme.wakeonlan.wear.WearDeviceClickedService");
             pm.setComponentEnabledSetting(component,
                     PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                     PackageManager.DONT_KILL_APP);
-        } catch (Exception e) {
-            Log.w("MainActivity", "Failed to enable Wear service", e);
+        } catch (Throwable t) {
+            Log.w("MainActivity", "Failed to enable Wear service", t);
         }
     }
 
