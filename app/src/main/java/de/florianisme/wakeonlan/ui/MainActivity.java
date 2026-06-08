@@ -23,8 +23,11 @@ import de.florianisme.wakeonlan.R;
 import de.florianisme.wakeonlan.databinding.ActivityMainBinding;
 import de.florianisme.wakeonlan.persistence.repository.DeviceRepository;
 import de.florianisme.wakeonlan.shortcuts.DynamicShortcutManager;
+import de.florianisme.wakeonlan.util.AppLogger;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "MainActivity";
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
@@ -33,15 +36,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        AppLogger.init(getApplicationContext());
+        AppLogger.i(TAG, "App onCreate started");
 
-        setVersionInformation();
+        try {
+            binding = ActivityMainBinding.inflate(getLayoutInflater());
+            setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.toolbar);
+            setVersionInformation();
 
-        initializeNavController();
-        initializeShortcuts();
+            setSupportActionBar(binding.toolbar);
+
+            initializeNavController();
+            initializeShortcuts();
+
+            AppLogger.i(TAG, "App onCreate completed successfully");
+        } catch (Exception e) {
+            AppLogger.e(TAG, "App crashed during startup", e);
+            AppLogger.flush();
+            throw e;
+        }
     }
 
     private void setVersionInformation() {

@@ -23,9 +23,12 @@ import de.florianisme.wakeonlan.ui.list.layoutmanager.LinearLayoutManagerWrapper
 import de.florianisme.wakeonlan.ui.list.status.pool.PingStatusTesterPool;
 import de.florianisme.wakeonlan.ui.list.status.pool.StatusTestType;
 import de.florianisme.wakeonlan.ui.list.status.pool.StatusTesterPool;
+import de.florianisme.wakeonlan.util.AppLogger;
 
 
 public class DeviceListFragment extends Fragment {
+
+    private static final String TAG = "DeviceListFragment";
 
     private DeviceRepository deviceRepository;
     private FragmentListDevicesBinding binding;
@@ -36,6 +39,7 @@ public class DeviceListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        AppLogger.i(TAG, "DeviceListFragment onCreateView");
 
         binding = FragmentListDevicesBinding.inflate(inflater, container, false);
         binding.addDeviceFab.setOnClickListener(view -> Navigation.findNavController(container).navigate(R.id.MainActivity_to_AddMachineActivity));
@@ -45,12 +49,14 @@ public class DeviceListFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        AppLogger.d(TAG, "onPause - pausing status checks");
         PingStatusTesterPool.getInstance().pauseAllForType(StatusTestType.LIST);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        AppLogger.d(TAG, "onResume - resuming status checks");
         PingStatusTesterPool.getInstance().resumeAll();
     }
 
@@ -58,10 +64,19 @@ public class DeviceListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        deviceRepository = DeviceRepository.getInstance(getContext());
+        AppLogger.i(TAG, "DeviceListFragment onViewCreated");
 
-        instantiateRecyclerView();
-        registerLiveDataObserver();
+        try {
+            deviceRepository = DeviceRepository.getInstance(getContext());
+
+            instantiateRecyclerView();
+            registerLiveDataObserver();
+
+            AppLogger.i(TAG, "DeviceListFragment initialized successfully");
+        } catch (Exception e) {
+            AppLogger.e(TAG, "Failed to initialize DeviceListFragment", e);
+            throw e;
+        }
     }
 
     private void registerLiveDataObserver() {
