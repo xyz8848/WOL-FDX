@@ -37,6 +37,9 @@ dependencies {
     implementation project(path: ':shared-models')
     implementation project(path: ':ping')
 
+    // Wear OS (compileOnly: GMS not required at runtime)
+    compileOnly 'com.google.android.gms:play-services-wearable:18.1.0'
+
     // Fix Duplicate class
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
 }
