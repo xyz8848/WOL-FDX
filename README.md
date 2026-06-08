@@ -1,7 +1,8 @@
-## Wake on Lan
-
+> [!WARNING]
 > **This is a fork without Google Mobile Services (GMS) and Wear OS support.**
 > **Optimized for de-Googled / custom ROM devices.**
+
+## Wake on Lan
 
 ### Description
 
