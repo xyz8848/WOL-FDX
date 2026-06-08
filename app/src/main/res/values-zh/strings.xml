@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 标题 -->
+    <string name="app_name">WOL-FDX</string>
+    <string name="title_activity_main">WOL-FDX</string>
+    <string name="title_activity_add_device">添加设备</string>
+    <string name="title_activity_edit_device">编辑设备</string>
+    <string name="title_fragment_device_list">设备列表</string>
+    <string name="title_fragment_network_scan">网络扫描</string>
+    <string name="title_fragment_backup">导出/导入数据</string>
+
+    <!-- 添加设备 -->
+    <string name="device_title_general">常规</string>
+    <string name="device_title_connection">连接</string>
+    <string name="device_title_security">安全</string>
+    <string name="device_title_status">状态</string>
+    <string name="add_device_name">名称</string>
+    <string name="add_device_status_ip">状态 IP（可选）</string>
+    <string name="add_device_status_ip_helper">设备将定期在此地址被 Ping 以显示其在线状态</string>
+    <string name="add_device_mac_address">MAC 地址</string>
+    <string name="add_device_default_port" translatable="false">9</string>
+    <string name="add_device_port">端口</string>
+    <string name="add_device_broadcast_address">广播地址（可选）</string>
+    <string name="add_device_autofill_broadcast">自动填充广播地址</string>
+    <string name="add_device_secure_on">SecureOn 密码（可选）</string>
+    <string name="add_device_shutdown">远程关机</string>
+    <string name="add_device_shutdown_explanation">使用 SSH 登录设备并执行指定的关机命令。\n此功能仅适用于运行 Linux 的机器</string>
+    <string name="add_device_shutdown_enable">启用远程关机</string>
+    <string name="add_device_shutdown_ip">SSH 地址</string>
+    <string name="add_device_shutdown_port">SSH 端口</string>
+    <string name="add_device_shutdown_username">用户名</string>
+    <string name="add_device_shutdown_password">密码</string>
+    <string name="add_device_shutdown_command">关机命令</string>
+    <string name="add_device_shutdown_command_helper">命令必须无需交互式身份验证即可执行（不能出现 sudo 密码提示）</string>
+    <string name="add_device_menu_save">保存</string>
+    <string name="add_device_menu_delete">删除</string>
+
+    <string name="add_device_error_mac_invalid">无效的 MAC 地址</string>
+    <string name="add_device_error_port_invalid">无效的端口</string>
+    <string name="add_device_error_name_empty">名称不能为空</string>
+    <string name="add_device_error_ip_invalid">无效的 IP 地址</string>
+    <string name="add_device_error_secure_on_password_invalid">密码必须为空或是有效的 MAC/IP 地址</string>
+    <string name="add_device_error_ssh_address_empty">未设置状态 IP 时，SSH 地址不能为空</string>
+    <string name="add_device_error_ssh_username_empty">用户名不能为空</string>
+    <string name="add_device_error_ssh_password_empty">密码不能为空</string>
+    <string name="add_device_error_ssh_command_empty">关机命令不能为空</string>
+    <string name="add_device_error_save_clicked">请先修正输入内容</string>
+
+    <!-- 编辑设备 -->
+    <string name="edit_machine_error_loading">访问设备时出错</string>
+    <string name="edit_device_delete_title">删除设备</string>
+    <string name="edit_device_delete_message">确定要删除此条目吗？</string>
+
+    <!-- 修改设备 -->
+    <string name="modify_device_unsaved_changes_title">未保存的更改</string>
+    <string name="modify_device_unsaved_changes_message">是否要保存更改？</string>
+    <string name="modify_device_unsaved_changes_negative">放弃</string>
+    <string name="modify_device_unsaved_changes_positive">保存</string>
+    <string name="modify_device_test_shutdown">测试关机命令</string>
+
+    <!-- 设备列表 -->
+    <string name="device_list_startup">开机</string>
+    <string name="device_list_shutdown">关机</string>
+    <string name="device_list_empty_title">未设置任何设备</string>
+    <string name="device_list_empty_hint">点击 \"+\" 图标添加您的第一个设备</string>
+    <string name="device_list_empty_image">电脑插图</string>
+    <string name="device_list_edit">编辑</string>
+
+    <!-- 快速设置磁贴 -->
+    <string name="tile_name_device_one">WOL 设备 1</string>
+    <string name="tile_name_device_two">WOL 设备 2</string>
+    <string name="tile_name_device_three">WOL 设备 3</string>
+    <string name="tile_no_device_found">未找到设备</string>
+    <string name="tile_subtitle">网络唤醒</string>
+
+    <!-- 杂项 -->
+    <string name="wol_toast_sending_packet">Magic Packet 已发送至 %1$s</string>
+
+    <!-- 备份 -->
+    <string name="backup_description">将当前配置的设备导出为 JSON 文件，或导入已有的数据集</string>
+    <string name="backup_note">注意：</string>
+    <string name="backup_note_content">导出的数据将以明文形式包含用于 SSH 远程关机认证的密码。\n\n导入设备列表将覆盖当前所有已配置的设备</string>
+    <string name="backup_button_export">导出</string>
+    <string name="backup_button_import">导入</string>
+    <string name="backup_message_import_success">成功导入 %1$d 个设备</string>
+    <string name="backup_message_import_error">导入设备时出错</string>
+    <string name="backup_message_export_success">成功导出 %1$d 个设备</string>
+    <string name="backup_message_export_error">导出设备时出错</string>
+
+    <!-- 网络扫描 -->
+    <string name="network_scan_button_add">添加设备</string>
+    <string name="network_scan_no_devices_found">未找到设备</string>
+    <string name="network_scan_empty_title">您是否已连接到 Wi-Fi 网络？</string>
+    <string name="network_scan_error_ip">无法获取 IP 地址</string>
+    <string name="network_scan_error_general">扫描网络时出错</string>
+
+    <!-- 主导航抽屉 -->
+    <string name="drawer_menu_item_device_list" translatable="false">@string/title_fragment_device_list</string>
+    <string name="drawer_menu_item_scan" translatable="false">@string/title_fragment_network_scan</string>
+    <string name="drawer_menu_item_backup" translatable="false">@string/title_fragment_backup</string>
+    <string name="drawer_menu_item_github">报告问题</string>
+    <string name="drawer_menu_header_version">版本 %1$s</string>
+
+    <!-- 快捷访问 -->
+    <string name="quick_access_device_subtitle">唤醒设备</string>
+
+    <!-- 快捷方式唤醒设备 -->
+    <string name="shortcut_wake_device_error">无法唤醒设备</string>
+
+    <!-- 远程关机 -->
+    <string name="remote_shutdown_send_command">正在发送关机命令到 %1$s</string>
+    <string name="remote_shutdown_send_command_dialog_title">远程关机测试</string>
+    <string name="test_shutdown_initial_destination">正在连接目标…</string>
+    <string name="test_shutdown_successful_destination">成功连接目标</string>
+    <string name="test_shutdown_initial_authorization">正在认证用户…</string>
+    <string name="test_shutdown_successful_authorization">用户认证成功</string>
+    <string name="test_shutdown_initial_session">正在目标上创建会话…</string>
+    <string name="test_shutdown_successful_session">用户会话创建成功</string>
+    <string name="test_shutdown_initial_command_execute">正在执行关机命令…</string>
+    <string name="test_shutdown_successful_command_execute">命令执行成功</string>
+
+    <string name="test_shutdown_error_connect_exception">无法连接到目标 %1$s，端口 %2$d</string>
+    <string name="test_shutdown_error_auth_exception">无法在主机 %2$s 上认证用户 %1$s</string>
+    <string name="test_shutdown_error_execution_exception">命令 \"%1$s\" 退出，状态码 %2$d（%3$s）</string>
+    <string name="test_shutdown_error_execution_timeout">命令 \"%1$s\" 执行时间过长或触发了 sudo 认证</string>
+    <string name="test_shutdown_error_execution_sudo_prompt">命令 \"%1$s\" 触发了 sudo 认证。\n请允许无 sudo 提示即可执行！</string>
+    <string name="test_shutdown_error_unknown_host">未知主机 \"%1$s\"</string>
+    <string name="test_shutdown_error_unknown_exception">遇到未知错误：%1$s</string>
+    <string name="execution_error_command_not_found">未找到命令</string>
+    <string name="execution_error_command_not_executable">命令不可执行</string>
+    <string name="execution_error_unknown">未知</string>
+</resources>

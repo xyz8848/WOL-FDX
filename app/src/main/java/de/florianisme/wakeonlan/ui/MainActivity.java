@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setGithubShortcut() {
         binding.navigationView.getMenu().findItem(R.id.githubShortcut).setOnMenuItemClickListener(item -> {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Florianisme/WakeOnLan"));
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/xyz8848/WOL-FDX"));
             startActivity(browserIntent);
 
             return false;

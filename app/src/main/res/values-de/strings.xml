@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Wake on Lan</string>
-    <string name="title_activity_main">Wake on Lan</string>
+    <string name="app_name">WOL-FDX</string>
+    <string name="title_activity_main">WOL-FDX</string>
     <string name="title_activity_add_device">Gerät hinzufügen</string>
     <string name="title_activity_edit_device">Gerät bearbeiten</string>
     <string name="add_device_name">Name</string>

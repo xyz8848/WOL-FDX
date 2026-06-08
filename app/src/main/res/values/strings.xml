@@ -1,7 +1,7 @@
 <resources>
     <!-- Titles -->
-    <string name="app_name">Wake on Lan</string>
-    <string name="title_activity_main">Wake on Lan</string>
+    <string name="app_name">WOL-FDX</string>
+    <string name="title_activity_main">WOL-FDX</string>
     <string name="title_activity_add_device">Add Device</string>
     <string name="title_activity_edit_device">Edit Device</string>
     <string name="title_fragment_device_list">Devices</string>
