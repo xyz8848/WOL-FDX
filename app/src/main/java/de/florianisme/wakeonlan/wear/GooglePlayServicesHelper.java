@@ -3,11 +3,9 @@ package de.florianisme.wakeonlan.wear;
 import android.content.Context;
 import android.util.Log;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-
 /**
  * Helper class to check Google Play Services availability for Wear OS features.
+ * Uses reflection to avoid NoClassDefFoundError on devices without GMS.
  */
 public class GooglePlayServicesHelper {
 
@@ -22,6 +20,7 @@ public class GooglePlayServicesHelper {
     /**
      * Check if Google Play Services (GMS) is available on this device.
      * Caches the result after the first call.
+     * Uses reflection to safely check without causing class loading failures on GMS-free devices.
      *
      * @param context Application or Activity context
      * @return true if GMS is available and functional
@@ -29,18 +28,27 @@ public class GooglePlayServicesHelper {
     public static boolean isGooglePlayServicesAvailable(Context context) {
         if (sIsAvailable == null) {
             try {
-                int result = GoogleApiAvailability.getInstance()
-                        .isGooglePlayServicesAvailable(context.getApplicationContext());
-                sIsAvailable = (result == ConnectionResult.SUCCESS);
-            } catch (NoClassDefFoundError e) {
-                Log.w(TAG, "Google Play Services not available on this device", e);
-                sIsAvailable = false;
-            } catch (Exception e) {
-                Log.w(TAG, "Failed to check Google Play Services availability", e);
+                int result = checkViaReflection(context.getApplicationContext());
+                sIsAvailable = (result == 0); // ConnectionResult.SUCCESS == 0
+            } catch (Throwable t) {
+                Log.w(TAG, "Google Play Services not available on this device", t);
                 sIsAvailable = false;
             }
         }
         return sIsAvailable;
+    }
+
+    /**
+     * Uses reflection to call GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable()
+     * without direct class imports that would fail class verification on GMS-free devices.
+     */
+    private static int checkViaReflection(Context context) throws Exception {
+        Class<?> googleApiAvailabilityClass = Class.forName(
+                "com.google.android.gms.common.GoogleApiAvailability");
+        Object instance = googleApiAvailabilityClass.getMethod("getInstance").invoke(null);
+        return (int) googleApiAvailabilityClass
+                .getMethod("isGooglePlayServicesAvailable", Context.class)
+                .invoke(instance, context);
     }
 
     /**

@@ -70,9 +70,13 @@ public class MainActivity extends AppCompatActivity {
         versionView.setText(getString(R.string.drawer_menu_header_version, BuildConfig.VERSION_NAME));
 
         // Show wear warning if Google Play Services is unavailable
-        if (!GooglePlayServicesHelper.isGooglePlayServicesAvailable(this)) {
-            TextView wearInfoView = headerView.findViewById(R.id.navigation_header_wear_info);
-            wearInfoView.setVisibility(View.VISIBLE);
+        try {
+            if (!GooglePlayServicesHelper.isGooglePlayServicesAvailable(this)) {
+                TextView wearInfoView = headerView.findViewById(R.id.navigation_header_wear_info);
+                wearInfoView.setVisibility(View.VISIBLE);
+            }
+        } catch (Throwable t) {
+            Log.w("MainActivity", "Failed to check Google Play Services", t);
         }
     }
 
